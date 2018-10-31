@@ -5,7 +5,7 @@ class PolarsConan(ConanFile):
     name = "Polars"
     version = "0.1"
     license = "MIT License"
-    url = "https://github.com/shivgadhia/polars"
+    url = "https://github.com/felix-org/polars"
     description = "A C++ TimeSeries library that aims to mimic pandas Series"
     settings = "cppstd", "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
@@ -16,7 +16,7 @@ class PolarsConan(ConanFile):
 
     def source(self):
         git = tools.Git()
-        git.clone("https://github.com/shivgadhia/polars.git", "cmake_dependency_flags")
+        git.clone("https://github.com/felix-org/polars.git", "master")
 
         # Add conan_basic_setup() to ensure resolved dependencies are linked
         tools.replace_in_file("src/cpp/polars/CMakeLists.txt", "add_library(polars_cpp ${CPP_SOURCES})",
