@@ -12,7 +12,7 @@ class PolarsConan(ConanFile):
     default_options = "shared=False"
     generators = "cmake"
     build_policy = "missing"
-    requires = "Armadillo/9.200.1@felix/stable", "Date/2.4.1@felix/stable"
+    requires = "Armadillo/9.200.1", "Date/2.4.1"
 
     def source(self):
         git = tools.Git()
@@ -32,6 +32,7 @@ class PolarsConan(ConanFile):
         cmake = CMake(self)
         cmake.definitions["WITH_TESTS"] = "OFF"
         cmake.definitions["WITH_SUBMODULE_DEPENDENCIES"] = "OFF"
+        cmake.definitions["BUILD_WITH_CONAN"] = "ON"
         cmake.configure()
         cmake.build()
 
