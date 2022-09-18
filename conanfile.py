@@ -3,7 +3,7 @@ from conans import ConanFile, CMake, tools
 
 class PolarsConan(ConanFile):
     name = "Polars"
-    version = "0.1"
+    version = "95ae547"
     license = "MIT License"
     url = "https://github.com/felix-org/polars"
     description = "A C++ TimeSeries library that aims to mimic pandas Series"
@@ -12,11 +12,12 @@ class PolarsConan(ConanFile):
     default_options = "shared=False"
     generators = "cmake"
     build_policy = "missing"
-    requires = "Armadillo/9.200.1@felix/stable", "Date/2.4.1@felix/stable"
+    requires = "Armadillo/9.200.1", "Date/328ceca"
 
     def source(self):
         git = tools.Git()
-        git.clone("https://github.com/felix-org/polars.git", "master")
+        git.clone("https://github.com/felix-org/polars.git")
+        git.checkout("95ae547")
 
         # Add conan_basic_setup() to ensure resolved dependencies are linked
         tools.replace_in_file("src/cpp/polars/CMakeLists.txt", "add_library(polars_cpp ${CPP_SOURCES})",
@@ -32,6 +33,7 @@ class PolarsConan(ConanFile):
         cmake = CMake(self)
         cmake.definitions["WITH_TESTS"] = "OFF"
         cmake.definitions["WITH_SUBMODULE_DEPENDENCIES"] = "OFF"
+        cmake.definitions["BUILD_WITH_CONAN"] = "ON"
         cmake.configure()
         cmake.build()
 
